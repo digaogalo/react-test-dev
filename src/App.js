@@ -3,9 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Navbar } from './components/navbar';
 import { Home } from './pages/home';
 import { DocumentDetails } from './pages/document-details';
-import MasterList from './components/MasterList';
-
 import "./App.css"
+import MasterList from './pages/document-masterlist/MasterList';
 
 const App = () => {
   return (
@@ -17,7 +16,7 @@ const App = () => {
                     <Home />
                 </Route>
                 <Route path="/list" exact>
-                    <MasterList />
+                  <MasterList />
                 </Route>
                 <Route path="/document-details/:id" exact component={DocumentDetails} />
             </Switch>

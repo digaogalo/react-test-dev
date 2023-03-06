@@ -28,7 +28,7 @@ export const Home = () => {
                             title="Criar Documento"
                             caption="Inserir novo documento"
                             actionText="Ir"
-                            route="/create"
+                            disabled
                         />
                     </Col>
                     <Col style={{ marginBottom: '24px' }} sm={6} md={6} lg={4}>
@@ -36,7 +36,7 @@ export const Home = () => {
                             title="Relatórios"
                             caption="Ver relatórios do documento"
                             actionText="Ir"
-                            route="/reports"
+                            disabled
                         />
                     </Col>
                 </Row>
