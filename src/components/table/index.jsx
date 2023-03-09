@@ -6,7 +6,7 @@ import './index.css';
 
 // Example of use
 
-/* { <Table
+ { <Table
     header={[
         {
             title: "A",
@@ -30,7 +30,7 @@ import './index.css';
         },
     ]}
     itemsPerPage={3}
-/> } */
+/> } 
 
 const Table = ({ header, rows, itemsPerPage }) => {
 

@@ -18,8 +18,14 @@ const MasterList = () => {
   }, []);
 
   const filteredDocuments = documents
-    .filter(d => d.title.toLowerCase().includes(titleFilter.toLowerCase()))
-    .filter(d => processFilter === '' || d.processes.some(p => p.name.toLowerCase().includes(processFilter.toLowerCase())));
+    .filter((d) => d.title.toLowerCase().includes(titleFilter.toLowerCase()))
+    .filter(
+      (d) =>
+        processFilter === "" ||
+        d.processes.some((p) =>
+          p.name.toLowerCase().includes(processFilter.toLowerCase())
+        )
+    );
 
   const indexOfLastDocument = currentPage * documentsPerPage;
   const indexOfFirstDocument = indexOfLastDocument - documentsPerPage;
