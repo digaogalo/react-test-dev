@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Pagination, Form } from 'react-bootstrap'; 
+import { Table, Pagination, Form, Button } from 'react-bootstrap';
 
 const MasterList = () => {
   const [documents, setDocuments] = useState([]);
@@ -8,6 +8,10 @@ const MasterList = () => {
   const [documentsPerPage] = useState(5);
   const [titleFilter, setTitleFilter] = useState('');
   const [processFilter, setProcessFilter] = useState('');
+
+  async function handleClick() {
+    
+  }
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -31,7 +35,33 @@ const MasterList = () => {
   const indexOfFirstDocument = indexOfLastDocument - documentsPerPage;
   const currentDocuments = filteredDocuments.slice(indexOfFirstDocument, indexOfLastDocument);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber); 
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleTitleFilter = () => {
+    const newFilteredDocuments = documents
+      .filter((d) => d.title.toLowerCase().includes(titleFilter.toLowerCase()))
+      .filter(
+        (d) =>
+          processFilter === "" ||
+          d.processes.some((p) =>
+            p.name.toLowerCase().includes(processFilter.toLowerCase())
+          )
+      );
+    setFilteredDocuments(newFilteredDocuments);
+  };
+
+  const handleProcessFilter = () => {
+    const newFilteredDocuments = documents
+      .filter((d) => d.title.toLowerCase().includes(titleFilter.toLowerCase()))
+      .filter(
+        (d) =>
+          processFilter === "" ||
+          d.processes.some((p) =>
+            p.name.toLowerCase().includes(processFilter.toLowerCase())
+          )
+      );
+    setFilteredDocuments(newFilteredDocuments);
+  };
 
   return (
     <>
@@ -44,6 +74,9 @@ const MasterList = () => {
             value={titleFilter}
             onChange={(e) => setTitleFilter(e.target.value)}
           />
+          <Button variant="primary" onClick={handleTitleFilter}>
+            Filter Title
+          </Button>
         </Form.Group>
         <Form.Group controlId="processFilter">
           <Form.Label>Process:</Form.Label>
@@ -53,8 +86,13 @@ const MasterList = () => {
             value={processFilter}
             onChange={(e) => setProcessFilter(e.target.value)}
           />
+          <Button variant="primary" onClick={handleProcessFilter}>
+            Filter Process
+          </Button>
         </Form.Group>
       </Form>
+
+    
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -71,23 +109,28 @@ const MasterList = () => {
               <td>{document.title}</td>
               <td>{document['release-date']}</td>
               <td>{document.processes.map((process) => process.name).join(', ')}</td>
+              <td>{document.code}</td>
+              <td>{document.title}</td>
+              <td>{document['release-date']}</td>
+              <td>{document.processes.map((process) => process.name).join(', ')}</td>
             </tr>
           ))}
         </tbody>
       </Table>
+
       <Pagination>
-        {[...Array(Math.ceil(filteredDocuments.length / documentsPerPage)).keys()].map((pageNumber) => (
-          <Pagination.Item  
-            key={pageNumber + 1}  
-            active={pageNumber + 1 === currentPage}   
-            onClick={() => paginate(pageNumber + 1)}
-          >
-            {pageNumber + 1}
-          </Pagination.Item>
-        ))}
-      </Pagination>
-    </>
-  );
+    <Pagination.First onClick={() => paginate(1)} />
+    <Pagination.Prev onClick={() => paginate(currentPage - 1)} />
+    {[...Array(Math.ceil(filteredDocuments.length / documentsPerPage)).keys()].map((number) => (
+      <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
+        {number + 1}
+      </Pagination.Item>
+    ))}
+    <Pagination.Next onClick={() => paginate(currentPage + 1)} />
+    <Pagination.Last onClick={() => paginate(Math.ceil(filteredDocuments.length / documentsPerPage))} />
+  </Pagination>
+</>
+);
 };
 
 export default MasterList;
