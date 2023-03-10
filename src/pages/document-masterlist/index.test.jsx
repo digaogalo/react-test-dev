@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
-import {  } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import AxiosMockAdapter from 'axios-mock-adapter';
 import api from '../../api';
+import MasterList from './MasterList';
 
 var mockedDocuments = [
     {
@@ -48,7 +49,7 @@ describe('Masterlist', () => {
     })
 
     it('should render page title', () => {
-        //render(<>);
-        //expect(screen.getByText("Master List")).toBeInTheDocument()
+        render(<MasterList />);
+        expect(screen.getByText("Master List")).toBeInTheDocument()
     });
 });
